@@ -1,26 +1,15 @@
 #!/usr/bin/env python
 
-def instructionType(instruction):
-	if instruction.find("forward") != -1:
-		return (0, 1)
-	elif instruction.find("down") != -1:
-		return (1, 0)
-	elif instruction.find("up") != -1:
-		return (-1, 0)
-	else:
-		return (0, 0)
-
 with open('d02.in') as f:
-	instr = []
-	for line in f:
-		instruction = line.split()
-		type = instructionType(instruction[0])
-		instr.append([type, int(instruction[1])])
+	instList = [[type, int(val)] for type,val in [line.split() for line in f]]
+
 aim = 0
 pos = [0,0] # depth, horizontal pos
-for instruction in instr:
-	if (instruction[0][0] == 0):
-		pos[0] += aim * instruction[1]
-	pos[1] += instruction[0][1] * instruction[1]
-	aim += instruction[0][0] * instruction[1]
+
+for type, val in instList:
+	pos[0] += (type == "forward") * aim * val
+	pos[1] += (type == "forward") * val
+	aim += (type == "down") * val
+	aim -= (type == "up") * val
+
 print(pos[0] * pos[1])
