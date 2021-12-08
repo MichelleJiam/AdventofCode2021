@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import difflib
-
 # len of 2: 1
 # len of 3: 7
 # len of 4: 4
@@ -10,13 +8,10 @@ import difflib
 # len of 7: 8
 
 def	findNum(sig, code):
-	# print('code in findNum: ', code)
 	remSig = [s for s in (set(sig) - set(code))]
-	# print('remaining signals: ', remSig)
 	for s in remSig:
 		common_1 = [c for c in s if code[1].find(c) != -1]
 		common_4 = [c for c in s if code[4].find(c) != -1]
-		# print(s, " common 1: ", common_1, " common 4: ", common_4)
 		if len(s) == 5 and len(common_1) == 1:
 			if len(common_4) == 2:
 				code[2] = s
@@ -55,27 +50,17 @@ def findMasks(sig, code):
 	# 	case 4: code[4] = s
 	# 	case 7: code[8] = s
 
-sigList = []
-outputList = []
-with open('test.in') as f:
-	# sigList, outputList = [line.split('|') for line in f]
-	for line in f:
-		valList = line.split()
-		delim = valList.index("|")
-		sigList.append(valList[:delim])
-		outputList.append(valList[delim + 1:])
-# print(sigList)
-# print(outputList)
-
+with open('d08.in') as f:
+	sigList, outputList = map(list, zip(*(line.split("|") for line in f)))
+	outputList = [line.split() for line in outputList]
+	sigList = [line.split() for line in sigList]
 
 sumVal = 0
 for i, sig in enumerate(sigList):
 	code = ["" for x in range(10)]
 	findMasks(sig, code)
 	findNum(sig, code)
-	# print('code after findNum: ', code)
 	val = [str(c_i) for o in outputList[i] for c_i, c in enumerate(code) if set(c) == set(o)]
 	val = int("".join(val))
 	sumVal += val
 print(sumVal)
-
