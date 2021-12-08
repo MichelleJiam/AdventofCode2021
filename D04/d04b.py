@@ -14,7 +14,7 @@ for n in draws:
 		if i not in winners and checkBingo(card, n):
 			winners.append(i)
 		if len(winners) is len(cards):
-			break;
+			break
 	else: continue
 	break
 sumCard = sum([int(c) for c in cards[winners[-1]] if c is not 'X'])
