@@ -11,6 +11,4 @@ def fishGrowth(popList, days):
 
 with open('d06.in') as f:
 	popList = f.read().split(",")
-# print(popList)
-# print([i for i in range(9)])
 print(fishGrowth(popList, 80))
