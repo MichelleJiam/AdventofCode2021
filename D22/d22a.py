@@ -15,12 +15,11 @@ if __name__ == "__main__":
     cubes = {}
     with open(INPUT) as f:
         for line in f:
-            switch = 1 if "on" in line else 0
             x1, x2, y1, y2, z1, z2 = [int(num) for num in re.findall('-?\d+', line)]  # regex for positive and negative numbers
             if within_range(x1, x2, y1, y2, z1, z2) is False:
                 continue
             for x in range(x1, x2 + 1):
                 for y in range(y1, y2 + 1):
                     for z in range(z1, z2 + 1):
-                        cubes[(x, y, z)] = switch
+                        cubes[(x, y, z)] = int("on" in line)  # 0 if instruction is "off", 1 if "on"
     print(countOf(cubes.values(), 1))
